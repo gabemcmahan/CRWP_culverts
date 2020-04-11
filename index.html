@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>CRWP Culvert Mapper</title>
+		<meta name="description" content="" />
+		<meta name="author" content="gmcmahan" />
+
+		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+
+ 		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" /> -->
+		
+		
+		
+		<link rel="icon" type="image/png" href="http://www.crks.org/CRWP_CulvertMapper/img/favicon.png">
+        
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		<script type="text/javascript"
+		    src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCg680g-XsK656-wSW0GRXrxeWC5-5dN5Q&sensor=false">
+		</script>
+		<script type="text/javascript" src="http://gmaps-utility-gis.googlecode.com/svn/trunk/fusiontips/src/fusiontips_compiled.js"></script>
+
+        
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script type="text/javascript" src="js/basic-jquery-slider.js"></script>
+        
+        <link href="css/styleUpgrade_2012_09.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="js/scriptUpgrade_2013_02_01.js"></script>
+        <script type="text/javascript" src="js/animate.js"></script>
+        
+        <!-- Add fancyBox -->
+		<link rel="stylesheet" href="js/fancybox/source/jquery.fancybox.css?v=2.1.1" type="text/css" media="screen" />
+		<script type="text/javascript" src="js/fancybox/source/jquery.fancybox.pack.js?v=2.1.1"></script>
+		
+		<link rel="stylesheet" href="js/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
+		<script type="text/javascript" src="js/fancybox/source/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+
+		<a id="scoringSum" class="fancybox" rel="group" href="img/scoringSum.jpg" style="color: #FFFFFF;text-decoration:none;" ></a>
+
+	</head>
+
+
+	<body>
+		
+		<div id="holder">
+        	
+
+        	<div id="header">
+ 
+        		<div id="crlogo2"></div>
+        		<div id="crslogan"></div>
+        		
+    		</div>
+        	
+        	<div id="visualizationsBlock" class="greyBack">
+        		
+        		
+        		
+        		<button class="button" onclick="window.open('https://docs.google.com/spreadsheet/ccc?key=0Ag_a8kjSvmjfdFowZFlsTHZOc1Zsb0RiUXV2NjRXcHc#gid=0')">
+        			Culvert Data Spreadsheet</button>
+        			&nbsp;&nbsp;
+        			
+        		<button class="button" onclick="window.open('https://docs.google.com/spreadsheet/pub?key=0Ag_a8kjSvmjfdFowZFlsTHZOc1Zsb0RiUXV2NjRXcHc&single=true&gid=1&output=html')">Metadata</button>
+        		&nbsp;&nbsp;
+        		
+        		
+        		<!-- <a class="links" href="https://docs.google.com/spreadsheet/ccc?key=0Avf4B385Xa-PdFlzRWcyeXlGM3pTdXJTN3VUR3ZOZFE#gid=0" target="_blank">
+							Culvert Data Spreadsheet</a> -->
+				
+				<button class="button" onclick="clickSummary()">Scoring Summary</button>
+					
+					
+					<!-- <a class="fancybox" rel="group" href="img/scoringSum.jpg" style="color: #FFFFFF;text-decoration:none;" >
+					Scoring Summary</a> -->
+				
+					
+					&nbsp;&nbsp;
+				<button class="button" onclick="window.open('http://www.crks.org/wp/wp-content/uploads/CRWPCulvertPrioritization.pdf')">Prioritization Documentation</button>
+							
+							
+				
+							
+				<!-- <a class="fancybox" rel="group" href="img/scoringSum.jpg" style="float: right;" >Scoring Summary</a> -->
+					
+	        	<div id="selectionInfo_holder">Details
+		        	<div id="selectInfo_div" style="width:320px;height:180px;padding:5px;overflow: auto;"></div>
+		        </div>
+		        
+		        <div id="scatterHolder">Plotted Scores
+		        	<div id="scatterPlot_div" ></div>
+		        </div>
+		        
+		        <div id="columnHolder">Total Scores
+		        	<div id="columnChart_div"></div>
+		        </div>
+		        
+				 <div id="container">
+	  
+				      <!--  Outer wrapper for presentation only, this can be anything you like -->
+				      <div id="banner">
+				        <!-- start Basic Jquery Slider -->
+				        <ul id="myUL" class="bjqs">
+				          
+				        </ul>
+				        <!-- end Basic jQuery Slider -->
+				      </div>
+				      <!-- End outer wrapper -->
+			      
+			    </div>
+	        </div>
+	        
+	        
+	        
+	       
+			<div id="MapHolder" class="greyBack">
+	        	<div id="map_canvas"></div>
+	        	
+	       </div>
+	       
+	        
+	        <div id="holder_table" class="greyBack">
+				
+				<div id="dashboard_div" style="float:left; width: 230px; color: #FFFFFF">
+						<div id="culvertComboFilter_div" ></div>
+						<br />
+						<div id="mileFilter_div" style="width: 200px;"></div>
+				</div>
+				
+					
+				
+					
+				<div id="table_div" style="float:left; width: 260px;height:140px;margin:10px;"></div>
+				
+				
+					
+					
+					
+				<form id="layersForm" class="white"><u>Map Layers</u><br /><br />
+					<input id="AWCcheck" type="checkbox" name="layer" value="AWC" onclick="clickAWC()" />AWC <br />
+					<input id="Milepostscheck" type="checkbox" name="layer" value="Mileposts" onclick="clickMileposts()" />Mileposts <br />
+					<input id="Bridgescheck" type="checkbox" name="layer" value="Bridges" onclick="clickBridges()" />Bridges <br />
+					<input id="Gagescheck" type="checkbox" name="layer" value="Gages" onclick="clickGages()" />Gage Sites <br />
+					<input id="NHDcheck" type="checkbox" name="layer" value="nhd" onclick="clickNHD()" />NHD Flowlines <br />
+					<!-- <input id="LScheck" type="checkbox" name="layer" value="LandStatus" onclick="clickLS()" />General Land Ownership  -->
+				</form>
+			</div>
+			
+			<div id="panelToggle" >
+				<img id="togImage" src="img/arrow-prev_tog.png" />
+			</div>
+			<!-- <div id="footer">This is the Footer</div> -->
+			
+		</div>
+		
+		
+
+	</body>
+</html>
